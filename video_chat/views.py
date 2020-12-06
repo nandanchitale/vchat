@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from .models import AppUser
 from django.shortcuts import render
 from django.contrib.messages.api import error
@@ -7,10 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponse, StreamingHttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User, auth
-from django.contrib.auth.decorators import login_required
-from django.utils import tree
-from django.views.generic import FormView
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -19,18 +17,17 @@ from django.views.generic import FormView
 def home(request):
     username = request.user.username
     context = {
-        'user':username,
+        'user': username,
     }
-    return HttpResponse("hello world")
-
+    return render(request, 'templates/index.html', context)
 
 def signin(request):
     if request.method == 'POST':
         username = request.POST['user']
-        passowrd = request.POST['password']
-        usr = auth.authenticate(username=username, passowrd=passowrd)
-        if usr is not None:
-            auth.login(request, usr)
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
             print('redirecting to home')
             return redirect('home')
         else:
