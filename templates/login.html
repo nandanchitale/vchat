@@ -1,0 +1,99 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>Sign-in Sign-up Form</title>
+</head>
+
+<body class="login-body">
+    <div class="container">
+        <div id="signInSignUpBox">
+            <div id="overlay">
+                <div id="overlayInner">
+                    <div id="signUp">
+                        {% if message %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show au-alert au-alert--70per"
+                            role="alert">
+                            <i class="zmdi zmdi-alert-triangle"></i>
+                            <span class="content">{{message}}</span>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="zmdi zmdi-close-circle"></i>
+                                </span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h1>Welcome </h1>
+                        <p>To keep connected with us please login with your personal info.</p>
+                        <button onClick='moveSliderRight()'>Sign In</button>
+                        {% endif %}
+                    </div>
+                    <div id="signIn">
+                        {% if message %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show au-alert au-alert--70per"
+                            role="alert">
+                            <i class="zmdi zmdi-alert-triangle"></i>
+                            <span class="content">{{message}}</span>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="zmdi zmdi-close-circle"></i>
+                                </span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start your journey with us.</p>
+                        <button onClick='moveSliderLeft()'>Sign Up</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div id="forms">
+                <div id="signInForm" class='shiftRight'>
+                    <div class="holder">
+                        <form action="signin" method="POST">
+                            {% csrf_token %}
+                            <h1>Sign in</h1>
+                            <input type="text" placeholder="Email/Username" name="user"><br>
+                            <input type="password" placeholder="Password" name="password"><br>
+                            <button type="submit">Sign In</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="signUpForm">
+                    <div class="holder">
+                        <form action="signup" method="POST">
+                            {% csrf_token %}
+                            <h1>Create Account</h1>
+                            <input type="text" placeholder="First Name" name="firstname"><br>
+                            <input type="text" placeholder="Last Name" name="lastname"><br>
+                            <input type="email" placeholder="Email" name="email"><br>
+                            <input type="password" placeholder="Password" name="password"><br>
+                            <input type="password" placeholder="confirm Passowrd">
+                            <button type="submit">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="align-content-center">
+        <div class="card">
+            <div class="card-header">
+                <h1>VChat Video Conference</h1>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-12 col-md-6 col-sm-2">
+                    <form>
+                        <label for="username">Name:</label>
+                        <input type="text" name="username" id="username">
+                        <button id="join_leave">Join Call</button>
+                    </form>
+                    <p id="count"></p>
+                    <div id="container" class="container">
+                        <div id="local" class="participant">
+                            <div></div>
+                            <div>Me</div>
+                        </div>
+                        <!-- More participants will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
