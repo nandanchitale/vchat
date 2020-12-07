@@ -22,46 +22,70 @@
             <div id="overlay">
                 <div id="overlayInner">
                     <div id="signUp">
+                        {% if message %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show au-alert au-alert--70per"
+                            role="alert">
+                            <i class="zmdi zmdi-alert-triangle"></i>
+                            <span class="content">{{message}}</span>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="zmdi zmdi-close-circle"></i>
+                                </span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% else %}
                         <h1>Welcome </h1>
                         <p>To keep connected with us please login with your personal info.</p>
                         <button onClick='moveSliderRight()'>Sign In</button>
+                        {% endif %}
                     </div>
                     <div id="signIn">
+                        {% if message %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger alert-dismissible fade show au-alert au-alert--70per"
+                            role="alert">
+                            <i class="zmdi zmdi-alert-triangle"></i>
+                            <span class="content">{{message}}</span>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="zmdi zmdi-close-circle"></i>
+                                </span>
+                            </button>
+                        </div>
+                        {% endfor %}
+                        {% else %}
                         <h1>Hello, Friend!</h1>
                         <p>Enter your personal details and start your journey with us.</p>
                         <button onClick='moveSliderLeft()'>Sign Up</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div id="forms">
                 <div id="signInForm" class='shiftRight'>
                     <div class="holder">
-                        <form action="signin" method="post">
+                        <form action="signin" method="POST">
+                            {% csrf_token %}
                             <h1>Sign in</h1>
-                            <a href="#" class='social-media-button'><i class="fa fa-google"></i></a>
-                            <a href="#" class='social-media-button'><i class="fa fa-facebook"></i></a>
-                            <a href="#" class='social-media-button'><i class="fa fa-linkedin"></i></a>
-                            <p>or use your account</p>
-                            <input type="email" placeholder="Email/Username" name="user"><br>
-                            <input type="password" placeholder="Password" name="password">
-                            <button>Sign In</button>
+                            <input type="text" placeholder="Email/Username" name="user"><br>
+                            <input type="password" placeholder="Password" name="password"><br>
+                            <button type="submit">Sign In</button>
                         </form>
                     </div>
                 </div>
                 <div id="signUpForm">
                     <div class="holder">
-                        <form action="signup" method="post">
+                        <form action="signup" method="POST">
+                            {% csrf_token %}
                             <h1>Create Account</h1>
-                            <a href="#" class='social-media-button'><i class="fa fa-google"></i></a>
-                            <a href="#" class='social-media-button'><i class="fa fa-facebook"></i></a>
-                            <a href="#" class='social-media-button'><i class="fa fa-linkedin"></i></a>
-                            <p>or use your email for registration</p>
                             <input type="text" placeholder="First Name" name="firstname"><br>
                             <input type="text" placeholder="Last Name" name="lastname"><br>
                             <input type="email" placeholder="Email" name="email"><br>
-                            <input type="password" placeholder="Password" name="passowrd"><br>
+                            <input type="password" placeholder="Password" name="password"><br>
                             <input type="password" placeholder="confirm Passowrd">
-                            <button>Sign Up</button>
+                            <button type="submit">Sign Up</button>
                         </form>
                     </div>
                 </div>

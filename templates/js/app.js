@@ -1,6 +1,6 @@
-function addLocalVideo(){
-    Twilio.Video.createLocalVideoTrack().then(track=>{
-        let video = document.getElementById('local').firstChild;
+function addLocalVideo() {
+    Twilio.Video.createLocalVideoTrack().then(track => {
+        let video = document.getElementById('you');
         video.appendChild(track.attach());
     });
 };
