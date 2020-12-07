@@ -1,23 +1,100 @@
 {% load static %}
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    </head>
-    <body>
-        <h1>Flask & Twilio Video Conference</h1>
-        <form>
-            <label for="username">Name: </label>
-            <input type="text" name=”username” id="username">
-            <button id="join_leave">Join call</button>
-        </form>
-        <p id="count"></p>
-        <div id="container" class="container">
-            <div id="local" class="participant"><div></div><div>Me</div></div>
-            <!-- more participants will be added dynamically here -->
-        </div>
+<!DOCTYPE HTML>
+<html lang="en">
 
-        <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
-        <script src="{% static 'js/app.js' %}"></script>
-    </body>
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title Page-->
+    <title>VChat</title>
+
+    <!-- Main CSS-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" media="all">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- Smooth Scrolling -->
+    <script>
+        $(document).ready(function () {
+            // Add smooth scrolling to all links
+            $("a").on('click', function (event) {
+
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (1500) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top - 200
+                    }, 2500, function () {
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="align-content-center">
+            <div class="card">
+                <div class="card-header">
+                    <h1>VChat Video Conference</h1>
+                </div>
+                <div class="card-body">
+                    <div class="col-lg-12 col-md-6 col-sm-2">
+                        <form>
+                            <label>Welcome {{ user }}</label>
+                            <input type="text" name="username" id="username">
+                            <button id="join_leave">Join Call</button>
+                            <button id="share_screen" disabled>Share Screen</button>
+                            <button id="toggle_chat">Toggle Chat</button>
+                        </form>
+                        <p id="count">Diconeected.</p>
+                        <div id="root">
+                            <div id="container" class="container">
+                                <div id="local" class="participant">
+                                    <div></div>
+                                    <div class="label">ME</div>
+                                </div>
+                                <!-- more participants will be added dynamically here -->
+                            </div>
+                            <div id="chat">
+                                <div id="chat-scroll">
+                                    <div id="chat-content">
+                                        <!-- Chat content will be added dynamically here -->
+                                    </div>
+                                </div>
+                                <input id="chat-input" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main JS-->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/releases/1.0.0/twilio-conversations.min.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
 </html>

@@ -10,8 +10,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+from twilio.jwt.access_token import AccessToken
+from twilio.jwt.access_token.grants import VideoGrant, ChatGrant
+from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
+
+twilio_account_sid = 'ACe85dcc931896434c5e640cfaff4f727b'
+twilio_api_key_sid = 'SK9866b5ed0e5e0e5faff5e6b41428c28d'
+twilio_api_key_secret = 'cGY17jT6g1W36Uxm1i5znB4HQV8zCf3n'
 
 # Create your views here.
+
 
 @login_required(login_url='login')
 def home(request):
@@ -20,6 +29,7 @@ def home(request):
         'user': username,
     }
     return render(request, 'templates/index.html', context)
+
 
 def signin(request):
     if request.method == 'POST':
@@ -32,7 +42,6 @@ def signin(request):
             return redirect('home')
         else:
             messages.error(request, 'Username or password is incorrect')
-            print(usr)
             return redirect('login')
 
     else:
@@ -83,3 +92,33 @@ def signup(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
+
+
+def vlogin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        conversation = get_chatroom('My Room')
+    try:
+        conversation.participants.create(identity=username)
+    except TwilioRestException as exc:
+        # do not error if the user is already in the conversation
+        if exc.status != 409:
+            raise
+
+    token = AccessToken(twilio_account_sid, twilio_api_key_sid,
+                        twilio_api_key_secret, identity=username)
+    token.add_grant(VideoGrant(room='My Room'))
+    token.add_grant(ChatGrant(service_sid=conversation.chat_service_sid))
+
+    return {'token': token.to_jwt().decode(),
+            'conversation_sid': conversation.sid}
+
+
+def get_chatroom(name):
+    for conversation in twilio_client.conversations.conversations.list():
+        if conversation.friendly_name == name:
+            return conversation
+
+    # a conversation with the given name does not exist ==> create a new one
+    return twilio_client.conversations.conversations.create(
+        friendly_name=name)
