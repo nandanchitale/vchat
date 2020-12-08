@@ -18,10 +18,12 @@ function addLocalVideo() {
     Twilio.Video.createLocalVideoTrack().then(track => {
         let video = document.getElementById('local').firstChild;
         let trackElement = track.attach();
+        let user = document.createElement('div')
+        user.innerHTML = trackElement
         trackElement.addEventListener('click', () => {
             zoomTrack(trackElement);
         });
-        video.appendChild(trackElement);
+        video.appendChild(user1);
     });
 };
 
@@ -78,7 +80,7 @@ function connect(username) {
         // get a token from the back end
         let data;
         console.log(username);
-        fetch("{{ '/vchat' }}", {
+        fetch('vlogin', {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -86,7 +88,7 @@ function connect(username) {
                 'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
                 'X-CSRFToken': csrftoken,
             },
-            body: JSON.stringify({ 'username': username })
+            body: JSON.stringify({'username': username })
         }).then(res => res.json()).then(_data => {
             // join video call
             data = _data;

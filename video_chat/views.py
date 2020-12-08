@@ -100,7 +100,9 @@ def logoutUser(request):
 
 def vlogin(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        username = request.POST.get('username')
+        data = json.loads(request.body)
+        username = data['username']
+        print(username)
         conversation = get_chatroom('My Room')
         try:
             conversation.participants.create(identity=username)

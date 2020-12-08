@@ -16,7 +16,7 @@ let screenTrack;
 
 function addLocalVideo() {
     Twilio.Video.createLocalVideoTrack().then(track => {
-        let video = document.getElementById('local').firstChild;
+        let video = document.getElementById('me');
         let trackElement = track.attach();
         trackElement.addEventListener('click', () => {
             zoomTrack(trackElement);
@@ -86,7 +86,7 @@ function connect(username) {
                 'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
                 'X-CSRFToken': csrftoken,
             },
-            body: JSON.stringify({ 'username': username })
+            body: JSON.stringify({'username': username })
         }).then(res => res.json()).then(_data => {
             // join video call
             data = _data;
