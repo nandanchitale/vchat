@@ -18,9 +18,9 @@ from twilio.jwt.access_token.grants import VideoGrant, ChatGrant
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 
-twilio_account_sid = 'ACe85dcc931896434c5e640cfaff4f727b'
-twilio_api_key_sid = 'SK9866b5ed0e5e0e5faff5e6b41428c28d'
-twilio_api_key_secret = 'cGY17jT6g1W36Uxm1i5znB4HQV8zCf3n'
+twilio_account_sid = <YOUR ACCOUNT SID>
+twilio_api_key_sid = <YOUR API KEY SID>
+twilio_api_key_secret = <YOUR API SECRET>
 twilio_client = Client(twilio_api_key_sid, twilio_api_key_secret,
                        twilio_account_sid)
 # Create your views here.
